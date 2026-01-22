@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: manage_data_api
+spec:
+  selector:
+    app: manage_data_api
+  type: NodePort
+  ports:
+  - port: 8000
+    targetPort: 8000
+    nodePort: 30080

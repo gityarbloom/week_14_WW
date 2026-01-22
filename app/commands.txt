@@ -1,0 +1,12 @@
+docker build -t israelyarbloom/manage_data_api:v1
+
+docker push israelyarbloom/manage_data_api:v1
+
+oc apply -f api-deployment.yaml
+oc apply -f api-service.yaml
+oc apply -f mysql-statefulset.yaml
+oc apply -f mysql-service.yaml
+
+oc get deployment
+oc get pods
+oc get svc

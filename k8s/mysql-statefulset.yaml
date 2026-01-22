@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  serviceName: mysql-cvs
+  
+  replicas: 2
+  
+  selector:
+    matchLabels:
+      app: mysql
+  
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: database
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+          name: mysql
+        
+        env:
+        - name: HOST
+          value: "mysql"
+        - name: ROOT
+          value: "root"
+        - name: PASSWORD
+          value: "password"
+        - name: DB_NAME
+          value: "weapons_db"
+        
+        
+        volumeMounts:
+        - name: mysql-storage
+          
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-storage
+      labels:
+        app: mysql
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
